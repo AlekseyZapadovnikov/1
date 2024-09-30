@@ -12,7 +12,7 @@ public class Main {
         Random rand = new Random();
         float[] x = new float[18];
         for (int i = 0; i <= 17; i++) {
-            x[i] = (float) rand.nextDouble(-15.0, 8.0);
+            x[i] = Math.min((rand.nextFloat(-15.0, 9.0)), 8);
         }
         float[][] z1 = new float[10][18];
         for (int i = 0; i < 10; i++) {
