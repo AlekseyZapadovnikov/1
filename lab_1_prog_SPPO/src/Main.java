@@ -1,5 +1,6 @@
 import java.util.Random;
 
+
 public class Main {
     public static void main(String[] args) {
         int[] sl2 = new int[]{10, 12, 13, 14, 15};
@@ -11,46 +12,58 @@ public class Main {
         Random rand = new Random();
         float[] x = new float[18];
         for (int i = 0; i <= 17; i++) {
-            x[i] = (rand.nextLong((long) (-15 * Math.pow(2, 54)), (long) Math.pow(2, 57) + 1)) / ((long) Math.pow(2, 54));
+            x[i] = (float) rand.nextDouble(-15.0, 8.0);
         }
         float[][] z1 = new float[10][18];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 18; j++) {
                 if (z[i] == 7) {
                     z1[i][j] = method1(x[j]);
-                    max = Math.max((int) z1[i][j] + 1, max);
                 } else {
                     if (inMassiv(z[i], sl2)) {
                         z1[i][j] = method2(x[j]);
-                        max = Math.max((int) z1[i][j] + 1, max);
                     } else {
                         z1[i][j] = method3(x[j]);
-                        max = Math.max((int) z1[i][j] + 1, max);
                     }
                 }
             }
         }
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 18; j++) {
-                System.out.printf("%20.3f ", z1[i][j]);
+                String stro = String.format("%10.3f ", z1[i][j]);
+                System.out.printf(stro);
             }
-            System.out.println("");
+            System.out.println();
         }
+        //printZ1();
     }
 
 
-    public static float method1(float ar) {
-        Float tg = (float) Math.tan(ar / 2);
-        Float cs = (float) Math.cos(ar);
-        Float as = (float) Math.asin(cs);
-        return (float) Math.pow((1 - tg) / as, 3);
+    public static float method1(float x) {
+        float rt = (float) Math.pow(((1-Math.tan(x/2))/Math.asin(Math.cos(x))), 3);
+        if (rt > Math.pow(10, 6)){
+            rt = (float) Double.POSITIVE_INFINITY;
+        }else {
+            if (rt < (-1 * Math.pow(10, 6))){
+                rt = (float) Double.NEGATIVE_INFINITY;
+            }
+        }
+        return rt;
     }
 
     public static float method2(float ar2) {
         float abs = -1 * Math.abs(ar2);
         float pw = (float) Math.pow(Math.exp(1), abs);
         float as = (float) Math.asin(pw);
-        return (float) Math.pow(as, 3);
+        float rt = (float) Math.pow(as, 3);
+        if (rt > Math.pow(10, 6)){
+            rt = (float) Double.POSITIVE_INFINITY;
+        }else {
+            if (rt < (-1 * Math.pow(10, 6))){
+                rt = (float) Double.NEGATIVE_INFINITY;
+            }
+        }
+        return rt;
     }
 
     public static float method3(float ar) {
@@ -60,9 +73,16 @@ public class Main {
         float sqrt = (float) Math.pow((2 * Math.pow(ln, 1/3)), 2);
         float cs = (float) Math.cos(ar);
         float as = (float) (2 * Math.pow(Math.asin(cs) + 1, 2));
-        return (float) Math.pow(tg_ln / as, sqrt);
+        float rt = (float) Math.pow(tg_ln / as, sqrt);
+        if (rt > Math.pow(10, 6)){
+            rt = (float) Double.POSITIVE_INFINITY;
+        }else {
+            if (rt < (-1 * Math.pow(10, 6))){
+                rt = (float) Double.NEGATIVE_INFINITY;
+            }
+        }
+        return rt;
     }
-
     public static boolean inMassiv(int x, int[] aray) {
         Boolean flag = Boolean.FALSE;
         for (int i : aray) {
